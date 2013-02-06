@@ -42,10 +42,5 @@ end
 # Make sure that one string (regexp) occurs before or after another one
 #   on the same page
 Then /^I should see "(.*)" before "(.*)"$/ do |arg1,arg2|
-  if arg1=~/[0-9]/
-    arg1=arg1.split('-').reverse.join('-')
-    arg2=arg2.split('-').reverse.join('-')
-    page.body.should =~/(#{arg1}).*(#{arg2})/m
-  end
   page.body.should =~/#{arg1}.*#{arg2}/m
 end

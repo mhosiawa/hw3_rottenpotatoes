@@ -28,6 +28,6 @@ Scenario: sort movies alphabetically
 
 Scenario: sort movies in increasing order of release date
   When I follow "Release Date"
-  Then I should see "26-10-1984" before "21-07-1989"
+  Then I should see "1981-06-12" before "1984-10-26"
   # your steps here
 
