@@ -12,15 +12,6 @@ Given /the following movies exist/ do |movies_table|
   #flunk "Unimplemented"
 end
 
-# Make sure that one string (regexp) occurs before or after another one
-#   on the same page
-
-Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
-  #  ensure that that e1 occurs before e2.
-  #  page.body is the entire content of the page as a string.
-  flunk "Unimplemented"
-end
-
 # Make it easier to express checking or unchecking several boxes at once
 #  "When I uncheck the following ratings: PG, G, R"
 #  "When I check the following ratings: G"
@@ -48,3 +39,13 @@ Then /I should see all of the movies/ do
   page.all('#movies tbody tr').size.should==Movie.count
 end
 
+# Make sure that one string (regexp) occurs before or after another one
+#   on the same page
+Then /^I should see "(.*)" before "(.*)"$/ do |arg1,arg2|
+  if arg1=~/[0-9]/
+    arg1=arg1.split('-').reverse.join('-')
+    arg2=arg2.split('-').reverse.join('-')
+    page.body.should =~/(#{arg1}).*(#{arg2})/m
+  end
+  page.body.should =~/#{arg1}.*#{arg2}/m
+end
