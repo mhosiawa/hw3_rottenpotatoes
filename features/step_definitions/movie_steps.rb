@@ -2,9 +2,12 @@
 
 Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
+    #if !Movie.find(movie)
     Movie.create!(movie)
+    #end
     # each returned element will be a hash whose key is the table header.
     # you should arrange to add that movie to the database here.
+
   end
   #flunk "Unimplemented"
 end
@@ -22,9 +25,9 @@ end
 #  "When I uncheck the following ratings: PG, G, R"
 #  "When I check the following ratings: G"
 
-When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
+Given /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   rating_list.split(/[^a-zA-Z0-9-]/).find_all{|x| x.length!=0}.each do |rating|
-    puts rating
+    #puts rating
     if uncheck 
       uncheck "ratings_#{rating}" 
     else
@@ -40,3 +43,8 @@ end
 Then /^I should see movies only with "(.*?)" and "(.*?)" ratings$/ do |arg1, arg2|
   page.all('#movies tbody tr td[2]').map {|x| x.text}.uniq.sort.should == [arg1,arg2].sort
 end
+
+Then /I should see all of the movies/ do
+  page.all('#movies tbody tr').size.should==Movie.count
+end
+
